@@ -95,7 +95,6 @@ A Postman Collection is provided to test all API endpoints related to user regis
 Click the button below to copy the Postman Collection JSON to your clipboard:
 
 ```html
-Click the button below to copy the Postman Collection JSON to your clipboard:
 <button onclick="navigator.clipboard.writeText({
   "info": {
 "name": "E-commerce API Updated",
