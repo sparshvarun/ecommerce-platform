@@ -95,52 +95,128 @@ A Postman Collection is provided to test all API endpoints related to user regis
 Click the button below to copy the Postman Collection JSON to your clipboard:
 
 ```html
-<button onclick="navigator.clipboard.writeText(JSON.stringify({
-  'info': {
-    'name': 'E-commerce API Updated',
-    'description': 'A Postman collection to test the e-commerce platform APIs.',
-    'schema': 'https://schema.getpostman.com/json/collection/v2.1.0/collection.json'
+Click the button below to copy the Postman Collection JSON to your clipboard:
+<button onclick="navigator.clipboard.writeText({
+  "info": {
+"name": "E-commerce API Updated",
+"description": "A Postman collection to test the e-commerce platform APIs.",
+"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  'item': [
-    {
-      'name': 'Register User',
-      'request': {
-        'method': 'POST',
-        'header': [{'key': 'Content-Type', 'value': 'application/json', 'type': 'text'}],
-        'body': { 'mode': 'raw', 'raw': '{"fullName": "John Doe", "email": "john.doe@example.com", "password": "password123"}' },
-        'url': 'http://localhost:3000/register'
-      }
+  "item": [
+{
+  "name": "Register User",
+  "request": {
+    "method": "POST",
+    "header": [{"key": "Content-Type", "value": "application/json", "type": "text"}],
+    "body": {
+      "mode": "raw",
+      "raw": "{\"fullName\": \"John Doe\", \"email\": \"john.doe@example.com\", \"password\": \"password123\"}"
     },
-    {
-      'name': 'Login User',
-      'event': [{
-        'listen': 'test',
-        'script': {
-          'exec': [
-            'pm.test("Login successful and token received", function () {',
-            '    pm.response.to.have.status(200);',
-            '    var jsonData = pm.response.json();',
-            '    pm.expect(jsonData.token).to.exist;',
-            '    pm.environment.set("token", jsonData.token);',
-            '    console.log("Token set:", jsonData.token);',
-            '});'
-          ],
-          'type': 'text/javascript'
-        }
-      }],
-      'request': {
-        'method': 'POST',
-        'header': [{'key': 'Content-Type', 'value': 'application/json', 'type': 'text'}],
-        'body': { 'mode': 'raw', 'raw': '{"email": "john.doe@example.com", "password": "password123"}' },
-        'url': 'http://localhost:3000/login'
-      }
+    "url": "http://localhost:3000/register"
+  }
+},
+{
+  "name": "Login User",
+  "event": [{
+    "listen": "test",
+    "script": {
+      "exec": [
+        "pm.test(\"Login successful and token received\", function () {",
+        "    pm.response.to.have.status(200);",
+        "    var jsonData = pm.response.json();",
+        "    pm.expect(jsonData.token).to.exist;",
+        "    pm.environment.set(\"token\", jsonData.token);",
+        "    console.log(\"Token set:\", jsonData.token);",
+        "});"
+      ],
+      "type": "text/javascript"
     }
+  }],
+  "request": {
+    "method": "POST",
+    "header": [{"key": "Content-Type", "value": "application/json", "type": "text"}],
+    "body": {
+      "mode": "raw",
+      "raw": "{\"email\": \"john.doe@example.com\", \"password\": \"password123\"}"
+    },
+    "url": "http://localhost:3000/login"
+  }
+},
+{
+  "name": "Seed Products",
+  "request": {
+    "method": "POST",
+    "header": [],
+    "url": "http://localhost:3000/seed-products"
+  }
+},
+{
+  "name": "Get Products",
+  "request": {
+    "method": "GET",
+    "header": [],
+    "url": "http://localhost:3000/products"
+  }
+},
+{
+  "name": "Add Product to Cart",
+  "event": [{
+    "listen": "prerequest",
+    "script": {
+      "exec": ["console.log(\"Using token:\", pm.environment.get(\"token\"));"],
+      "type": "text/javascript"
+    }
+  }],
+  "request": {
+    "method": "POST",
+    "header": [
+      {"key": "Content-Type", "value": "application/json", "type": "text"},
+      {"key": "Authorization", "value": "Bearer {{token}}", "type": "text"}
+    ],
+    "body": {
+      "mode": "raw",
+      "raw": "{\"productId\": \"prod1\", \"quantity\": 1}"
+    },
+    "url": "http://localhost:3000/cart"
+  }
+},
+{
+  "name": "Get Cart",
+  "request": {
+    "method": "GET",
+    "header": [{"key": "Authorization", "value": "Bearer {{token}}", "type": "text"}],
+    "url": "http://localhost:3000/cart"
+  }
+},
+{
+  "name": "Remove Product from Cart",
+  "request": {
+    "method": "DELETE",
+    "header": [{"key": "Authorization", "value": "Bearer {{token}}", "type": "text"}],
+    "url": "http://localhost:3000/cart/prod1"
+  }
+},
+{
+  "name": "Place Order",
+  "request": {
+    "method": "POST",
+    "header": [
+      {"key": "Content-Type", "value": "application/json", "type": "text"},
+      {"key": "Authorization", "value": "Bearer {{token}}", "type": "text"}
+    ],
+    "body": {
+      "mode": "raw",
+      "raw": "{\"shippingAddress\": \"123 Main St, City, Country\"}"
+    },
+    "url": "http://localhost:3000/orders"
+  }
+}
   ],
-  'variable': [{'key': 'token', 'value': '', 'type': 'string', 'description': 'JWT token from login'}]
-}));">Copy Postman Collection</button>
-
-<script>
-document.querySelector('button').addEventListener('click', () => alert('Postman Collection copied to clipboard!'));
+  "variable": [
+{"key": "token", "value": "", "type": "string", "description": "JWT token from login"}
+  ]
+})">Copy Postman Collection</button><script>
+  document.querySelector('button').addEventListener('click', () => alert('Postman Collection copied to clipboard!'));
 </script>
 ```
 
