@@ -246,10 +246,4 @@ Click the button below to copy the Postman Collection JSON to your clipboard:
 
 ---
 
-### Contributions
-Contributions are welcome! Feel free to open a pull request or report issues.
-
-### License
-This project is licensed under the MIT License.
-
 
